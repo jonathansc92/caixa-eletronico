@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>Caixa Eletrônico</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                //inicia a conta 
+                ajaxRequest('iniciaConta', '{}');
+            });
+            function  ajaxRequest(action, data) {
+                $.ajax({
+                    method: "POST",
+                    url: "./src/api.php?action=" + action,
+                    data: {'valor': data},
+                    dataType: "json"
+                }).done(function (msg) {
+                    returnRequest(msg);
+                });
+            }
+            function returnRequest(msg) {
+                switch (msg.action) {
+                    case 'atualiza-saldo':
+                        $('#saldo').html(msg.valor);
+                        break;
+                }
+            }
+
+//            $(document).ready(function () {
+//                $('#sacar').click(function () {
+//
+//                    //   var formData = new FormData();
+//
+//                    var valor = document.getElementById('valor').value;
+//
+//                    document.getElementById('saldo').innerHTML = valor;//
+//
+//                    ajaxRequest('saque', valor);
+//                });
+//            });
+
+            $(document).ready(function () {
+                $('#depositar').click(function () {
+                    var valor = document.getElementById('valor').value;
+
+                  //  document.getElementById('saldo').innerHTML = valor;//
+
+                    ajaxRequest('deposito',  valor);
+                });
+            });
+        </script>
+
+    </head>
+
+    <body >
+        <div class="container">
+            <div class="">
+
+
+                <form id="conta" method="post" action="">
+                    <div>
+                        <h1>Caixa Eletrônico</h1>
+                        <h3 >Saldo R$<span id="saldo" class="h2 text-success"></span>
+                        </h3>
+                        <label>
+                            Valor: <input type="text" id="valor" name="valor" class="input-form">
+                        </label>
+                        <a href="#none" id="sacar" class="btn btn-danger">- Sacar</a>
+                        <a href="#none" id="depositar" class="btn btn-success">+ Depositar</a>
+                    </div>
+                </form>
+            </div>
+
+            <hr>
+            <h3>Próximos passos:</h3>
+            <ul>
+                <li>Crie uma classe Conta no diretório <code>/src</code></li>
+                <li>Nesta classe implemente os métodos necessários para:
+                    <ul>
+                        <li>Depositar</li>
+                        <li>Sacar</li>
+                        <li>Saldo Disponível</li>
+                    </ul>
+                </li>
+                <li>Utilizando ajax, desenvolva pelo menos uma das seguintes funções: Depositar ou Sacar</li>
+                <li>Utilize o formulário disponivel em neste arquivo (<code>/index.html</code>) para demonstrar o programa funcionando</li>
+
+            </ul>
+            <h3>Sequência esperada:</h3>
+            <ol>
+                <li>Ao entrar na página um nova conta é instanciada via ajax <code>ajaxRequest('iniciaConta', '{}');</code></li>
+                <li>No retorno da requisição inicial, o elemento Saldo é atualizado</li>
+                <li>Digita-se um valor no campo valor</li>
+                <li>Clica-se em Depositar</li>
+                <li>É executada uma requisição (<code>ajaxRequest('deposito', '{"valor":""}');</code>) para realizar o depósito na conta instanciada no primeiro passo</li>
+                <li>Atualiza-se o valor do elemento Saldo</li>
+                <li>Apaga-se o valor do elemento Valor</li>
+
+            </ol>
+            <p>* Repetindo os passos 3 e 4, o saldo deve ser atualizado com a soma do saldo atual mais o novo valor digitado</p>
+
+            <h3>Observações</h3>
+            <ul>
+                <li>Seu código não precisa estar perfeito, mas seguir alguns princípios seria de bom tom:
+                    <ul>
+                        <li>
+                            Organização/Endentação (você prefere espaços ou tabs?)
+                        </li>
+                        <li>
+                            Comentários (não precisamos uma documentação completa! :D Somente uma base!)
+                        </li>
+                    </ul>
+                </li>
+                <li>Você pode consultar a internet a vontade caso não se lembre de alguma coisa (não somos uma máquina)</li>
+                <li>Você não precisa fazer commit do que foi feito</li>
+                <li>Qualquer dúvida, pergunte.</li>
+                <li>Ao final do teste, dirija-se a recepção para chamar o responsável</li>
+                <li>Gostaríamos que você demonstrasse o sistema funcionando e o como você fez.</li>
+                <li>Obrigado pela atenção e bom trabalho!</li>
+
+            </ul>
+            <footer>Todos os direitos reservados. Uneworld Viagens e Turismo.</footer>
+        </div>
+
+    </body>
+</html>
